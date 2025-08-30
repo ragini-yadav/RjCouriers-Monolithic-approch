@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RJCouriers - Fast & Reliable Package Delivery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem auto;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            color: #666;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #f8f9ff, #e8ebff);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+        }
+
+        .service-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .tracking-result {
+            background: linear-gradient(135deg, #e8f5e8, #f0fff0);
+            border: 2px solid #4caf50;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .tracking-result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .status {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: rgba(51, 51, 51, 0.95);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo" onclick="showSection('home')">RJCouriers</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showSection('home')">Home</a></li>
+                <li><a onclick="showSection('book')">Book a Courier</a></li>
+                <li><a onclick="showSection('track')">Track Package</a></li>
+                <li><a onclick="showSection('services')">Services</a></li>
+                <li><a onclick="showSection('contact')">Contact Us</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Welcome to RJCouriers</h1>
+                <p>Your trusted partner for fast, reliable, and secure package delivery services. We connect people and businesses across the globe with our comprehensive courier solutions.</p>
+                <div class="cta-buttons">
+                    <button class="btn" onclick="showSection('book')">Book a Courier</button>
+                    <button class="btn btn-secondary" onclick="showSection('track')">Track Package</button>
+                </div>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🚚 Same-Day Delivery</h3>
+                    <p>Get your packages delivered within hours with our express same-day service. Perfect for urgent documents and time-sensitive deliveries.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🌍 International Shipping</h3>
+                    <p>Reliable international courier services to over 200 countries worldwide. Track your package every step of the way.</p>
+                </div>
+                <div class="service-card">
+                    <h3>📦 Secure Packaging</h3>
+                    <p>Professional packaging services to ensure your items arrive safely. We handle fragile and valuable items with extra care.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book a Courier Section -->
+        <section id="book" class="section">
+            <h2>Book a Courier</h2>
+            <form id="bookingForm">
+                <h3>Sender Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="senderName">Full Name *</label>
+                        <input type="text" id="senderName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="senderPhone">Phone Number *</label>
+                        <input type="tel" id="senderPhone" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="senderAddress">Address *</label>
+                    <textarea id="senderAddress" rows="3" required></textarea>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Receiver Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="receiverName">Full Name *</label>
+                        <input type="text" id="receiverName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="receiverPhone">Phone Number *</label>
+                        <input type="tel" id="receiverPhone" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="receiverAddress">Address *</label>
+                    <textarea id="receiverAddress" rows="3" required></textarea>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Package Details</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="packageType">Package Type *</label>
+                        <select id="packageType" required>
+                            <option value="">Select package type</option>
+                            <option value="documents">Documents</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="books">Books</option>
+                            <option value="fragile">Fragile Items</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="packageWeight">Weight (kg)</label>
+                        <input type="number" id="packageWeight" min="0" step="0.1">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pickupDate">Pickup Date *</label>
+                        <input type="date" id="pickupDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pickupTime">Pickup Time *</label>
+                        <input type="time" id="pickupTime" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="specialInstructions">Special Instructions</label>
+                    <textarea id="specialInstructions" rows="3" placeholder="Any special handling instructions..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Book Courier Service</button>
+            </form>
+            <div id="bookingAlert" class="alert"></div>
+        </section>
+
+        <!-- Track Package Section -->
+        <section id="track" class="section">
+            <h2>Track Your Package</h2>
+            <p>Enter your tracking ID to check the status of your package delivery.</p>
+            
+            <div style="background: #f0f8ff; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #667eea;">
+                <p><strong>💡 Demo Tracking IDs you can try:</strong></p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+                    <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="document.getElementById('trackingId').value='RJC001'; trackPackage();">RJC001</button>
+                    <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="document.getElementById('trackingId').value='RJC002'; trackPackage();">RJC002</button>
+                    <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="document.getElementById('trackingId').value='RJC003'; trackPackage();">RJC003</button>
+                    <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="document.getElementById('trackingId').value='RJC004'; trackPackage();">RJC004</button>
+                    <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;" onclick="document.getElementById('trackingId').value='RJC005'; trackPackage();">RJC005</button>
+                </div>
+            </div>
+            
+            <div class="form-group" style="max-width: 500px; margin: 2rem auto;">
+                <label for="trackingId">Tracking ID</label>
+                <input type="text" id="trackingId" placeholder="Enter your tracking ID (e.g., RJC001)" style="text-transform: uppercase;">
+                <button class="btn" onclick="trackPackage()" style="margin-top: 1rem; width: 100%;">Track Package</button>
+            </div>
+
+            <div id="trackingResult" class="tracking-result">
+                <div class="status" id="packageStatus"></div>
+                <p><strong>🔢 Tracking ID:</strong> <span id="displayTrackingId"></span></p>
+                <p><strong>📍 Current Location:</strong> <span id="currentLocation"></span></p>
+                <p><strong>🚚 Estimated Delivery:</strong> <span id="estimatedDelivery"></span></p>
+                <p><strong>🕒 Last Updated:</strong> <span id="lastUpdated"></span></p>
+            </div>
+
+            <div id="trackingAlert" class="alert"></div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <h2>Our Services</h2>
+            <p>RJCouriers offers a comprehensive range of delivery solutions tailored to meet your specific needs.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🚀 Express Delivery</h3>
+                    <p><strong>Same-day delivery within the city</strong></p>
+                    <p>Perfect for urgent documents, medical supplies, and time-critical packages. Delivery within 2-6 hours.</p>
+                    <p><strong>Starting from ₹199</strong></p>
+                    <button class="btn" onclick="showSection('book')">Book Now</button>
+                </div>
+                
+                <div class="service-card">
+                    <h3>📦 Standard Delivery</h3>
+                    <p><strong>Reliable delivery within 1-3 business days</strong></p>
+                    <p>Our most popular service for everyday shipping needs. Includes tracking and insurance coverage up to ₹5,000.</p>
+                    <p><strong>Starting from ₹99</strong></p>
+                    <button class="btn" onclick="showSection('book')">Book Now</button>
+                </div>
+                
+                <div class="service-card">
+                    <h3>🌍 International Shipping</h3>
+                    <p><strong>Worldwide delivery to 200+ countries</strong></p>
+                    <p>Secure international shipping with customs clearance assistance and door-to-door tracking.</p>
+                    <p><strong>Starting from ₹999</strong></p>
+                    <button class="btn" onclick="showSection('book')">Book Now</button>
+                </div>
+                
+                <div class="service-card">
+                    <h3>💼 Corporate Solutions</h3>
+                    <p><strong>Bulk shipping for businesses</strong></p>
+                    <p>Dedicated account management, volume discounts, and API integration for seamless business operations.</p>
+                    <p><strong>Custom Pricing</strong></p>
+                    <button class="btn" onclick="showSection('contact')">Contact Us</button>
+                </div>
+                
+                <div class="service-card">
+                    <h3>🛡️ Secure Transport</h3>
+                    <p><strong>High-value item delivery</strong></p>
+                    <p>Specialized service for valuable items, electronics, and sensitive documents with enhanced security protocols.</p>
+                    <p><strong>Starting from ₹299</strong></p>
+                    <button class="btn" onclick="showSection('book')">Book Now</button>
+                </div>
+                
+                <div class="service-card">
+                    <h3>🏠 Home Pickup</h3>
+                    <p><strong>Convenient doorstep collection</strong></p>
+                    <p>Schedule a pickup from your home or office. Our courier will collect your package at your convenience.</p>
+                    <p><strong>Starting from ₹149</strong></p>
+                    <button class="btn" onclick="showSection('book')">Book Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2>Contact Us</h2>
+            <p>Have questions or need assistance? We're here to help! Reach out to us through any of the following channels.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin: 3rem 0;">
+                <div>
+                    <h3>Get in Touch</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Full Name *</label>
+                            <input type="text" id="contactName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address *</label>
+                            <input type="email" id="contactEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subject *</label>
+                            <select id="contactSubject" required>
+                                <option value="">Select inquiry type</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="complaint">Complaint</option>
+                                <option value="pricing">Pricing Information</option>
+                                <option value="partnership">Business Partnership</option>
+                                <option value="technical">Technical Support</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message *</label>
+                            <textarea id="contactMessage" rows="5" required placeholder="Please describe your inquiry..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                
+                <div>
+                    <h3>Contact Information</h3>
+                    <div style="background: #f8f9ff; padding: 2rem; border-radius: 15px; border: 1px solid #e0e0e0;">
+                        <p><strong>📞 Phone:</strong> +91-9876543210</p>
+                        <p><strong>📧 Email:</strong> support@rjcouriers.com</p>
+                        <p><strong>📍 Address:</strong> 123 Business Hub, Andheri East, Mumbai, Maharashtra 400069</p>
+                        <p><strong>🕒 Business Hours:</strong> Monday - Saturday: 9:00 AM - 7:00 PM</p>
+                        <p><strong>🆘 Emergency:</strong> 24/7 Customer Support: +91-9876543211</p>
+                    </div>
+                    
+                    <h3 style="margin-top: 2rem;">Follow Us</h3>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <a href="#" class="btn btn-secondary">Facebook</a>
+                        <a href="#" class="btn btn-secondary">Twitter</a>
+                        <a href="#" class="btn btn-secondary">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div id="contactAlert" class="alert"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>RJCouriers</h3>
+                    <p>Delivering excellence since 2020. Your trusted partner for all courier and delivery needs.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="#" onclick="showSection('services')">Our Services</a></p>
+                    <p><a href="#" onclick="showSection('track')">Track Package</a></p>
+                    <p><a href="#" onclick="showSection('book')">Book Courier</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <p><a href="#">Privacy Policy</a></p>
+                    <p><a href="#">Terms of Service</a></p>
+                    <p><a href="#">Shipping Policy</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <p><a href="#" onclick="showSection('contact')">Contact Us</a></p>
+                    <p><a href="#">FAQ</a></p>
+                    <p><a href="#">Help Center</a></p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #555; padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2025 RJCouriers. All rights reserved. Made with ❤️ in Mumbai</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation and Menu System
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Close mobile menu if open
+            document.getElementById('navLinks').classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Booking System
+        let bookingCounter = 4; // Start from 4 since we have demo data for RJC001-RJC003
+        const bookings = {}; // Store bookings in memory
+
+        // Initialize with dummy tracking data
+        function initializeDummyData() {
+            const demoBookings = {
+                'RJC001': {
+                    trackingId: 'RJC001',
+                    senderName: 'Rajesh Kumar',
+                    receiverName: 'Priya Sharma',
+                    packageType: 'Electronics',
+                    status: 'In Transit',
+                    currentLocation: 'Mumbai Distribution Center',
+                    estimatedDelivery: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                    lastUpdated: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+                    bookingDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) // 1 day ago
+                },
+                'RJC002': {
+                    trackingId: 'RJC002',
+                    senderName: 'Anita Patel',
+                    receiverName: 'Vikram Singh',
+                    packageType: 'Documents',
+                    status: 'Delivered',
+                    currentLocation: 'Destination - Package Delivered',
+                    estimatedDelivery: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+                    lastUpdated: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 hours ago
+                    bookingDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) // 3 days ago
+                },
+                'RJC003': {
+                    trackingId: 'RJC003',
+                    senderName: 'Mohammad Ali',
+                    receiverName: 'Sunita Reddy',
+                    packageType: 'Fragile Items',
+                    status: 'Pending Pickup',
+                    currentLocation: 'Origin - Awaiting Collection',
+                    estimatedDelivery: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+                    lastUpdated: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
+                    bookingDate: new Date(Date.now() - 4 * 60 * 60 * 1000) // 4 hours ago
+                },
+                'RJC004': {
+                    trackingId: 'RJC004',
+                    senderName: 'Tech Solutions Pvt Ltd',
+                    receiverName: 'Global Corp Inc',
+                    packageType: 'Documents',
+                    status: 'Out for Delivery',
+                    currentLocation: 'Andheri Local Delivery Hub',
+                    estimatedDelivery: new Date(Date.now() + 0.5 * 24 * 60 * 60 * 1000), // Today evening
+                    lastUpdated: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
+                    bookingDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
+                },
+                'RJC005': {
+                    trackingId: 'RJC005',
+                    senderName: 'Kavya Menon',
+                    receiverName: 'Arjun Nair',
+                    packageType: 'Clothing',
+                    status: 'Picked Up',
+                    currentLocation: 'Bandra Collection Point - In Transit',
+                    estimatedDelivery: new Date(Date.now() + 1.5 * 24 * 60 * 60 * 1000),
+                    lastUpdated: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
+                    bookingDate: new Date(Date.now() - 8 * 60 * 60 * 1000) // 8 hours ago
+                }
+            };
+
+            // Add dummy data to bookings
+            Object.assign(bookings, demoBookings);
+        }
+
+        function generateTrackingId() {
+            const id = `RJC${String(bookingCounter).padStart(3, '0')}`;
+            bookingCounter++;
+            return id;
+        }
+
+        function showAlert(elementId, message, type = 'success') {
+            const alertElement = document.getElementById(elementId);
+            alertElement.textContent = message;
+            alertElement.className = `alert ${type} show`;
+            
+            setTimeout(() => {
+                alertElement.classList.remove('show');
+            }, 5000);
+        }
+
+        function validateForm(formData) {
+            const requiredFields = ['senderName', 'senderPhone', 'senderAddress', 
+                                  'receiverName', 'receiverPhone', 'receiverAddress', 
+                                  'packageType', 'pickupDate', 'pickupTime'];
+            
+            for (let field of requiredFields) {
+                if (!formData[field] || formData[field].trim() === '') {
+                    return `Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()} field.`;
+                }
+            }
+
+            // Validate pickup date is not in the past
+            const pickupDateTime = new Date(`${formData.pickupDate}T${formData.pickupTime}`);
+            const now = new Date();
+            if (pickupDateTime <= now) {
+                return 'Pickup date and time must be in the future.';
+            }
+
+            // Validate phone numbers
+            const phoneRegex = /^\+?[\d\s-()]{10,}$/;
+            if (!phoneRegex.test(formData.senderPhone) || !phoneRegex.test(formData.receiverPhone)) {
+                return 'Please enter valid phone numbers.';
+            }
+
+            return null;
+        }
+
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                senderName: document.getElementById('senderName').value,
+                senderPhone: document.getElementById('senderPhone').value,
+                senderAddress: document.getElementById('senderAddress').value,
+                receiverName: document.getElementById('receiverName').value,
+                receiverPhone: document.getElementById('receiverPhone').value,
+                receiverAddress: document.getElementById('receiverAddress').value,
+                packageType: document.getElementById('packageType').value,
+                packageWeight: document.getElementById('packageWeight').value,
+                pickupDate: document.getElementById('pickupDate').value,
+                pickupTime: document.getElementById('pickupTime').value,
+                specialInstructions: document.getElementById('specialInstructions').value
+            };
+
+            // Validate form
+            const validationError = validateForm(formData);
+            if (validationError) {
+                showAlert('bookingAlert', validationError, 'error');
+                return;
+            }
+
+            // Generate tracking ID and store booking
+            const trackingId = generateTrackingId();
+            const bookingDate = new Date();
+            
+            bookings[trackingId] = {
+                ...formData,
+                trackingId: trackingId,
+                bookingDate: bookingDate,
+                status: 'Pickup Scheduled',
+                currentLocation: 'Pickup Location',
+                estimatedDelivery: new Date(Date.now() + (Math.random() * 3 + 1) * 24 * 60 * 60 * 1000) // 1-4 days from now
+            };
+
+            // Show success message
+            showAlert('bookingAlert', 
+                `Booking confirmed! Your tracking ID is: ${trackingId}. Please save this ID to track your package.`, 
+                'success');
+            
+            // Reset form
+            this.reset();
+            
+            // Set minimum date for pickup
+            setMinPickupDate();
+        });
+
+        // Tracking System
+        function trackPackage() {
+            const trackingId = document.getElementById('trackingId').value.trim().toUpperCase();
+            
+            if (!trackingId) {
+                showAlert('trackingAlert', 'Please enter a tracking ID.', 'error');
+                document.getElementById('trackingResult').classList.remove('show');
+                return;
+            }
+
+            // Check if booking exists
+            if (bookings[trackingId]) {
+                const booking = bookings[trackingId];
+                updateTrackingResult(booking);
+                
+                // Clear any error alerts
+                document.getElementById('trackingAlert').classList.remove('show');
+            } else {
+                showAlert('trackingAlert', `Tracking ID "${trackingId}" not found. Please check your tracking ID and try again. Try: RJC001, RJC002, RJC003, RJC004, or RJC005`, 'error');
+                document.getElementById('trackingResult').classList.remove('show');
+            }
+        }
+
+        function updateTrackingResult(data) {
+            document.getElementById('displayTrackingId').textContent = data.trackingId;
+            document.getElementById('packageStatus').textContent = data.status;
+            document.getElementById('currentLocation').textContent = data.currentLocation;
+            
+            // Format estimated delivery date
+            const deliveryDate = new Date(data.estimatedDelivery);
+            document.getElementById('estimatedDelivery').textContent = deliveryDate.toLocaleDateString('en-IN', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // Format last updated time
+            const lastUpdated = new Date(data.lastUpdated);
+            document.getElementById('lastUpdated').textContent = lastUpdated.toLocaleString('en-IN', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // Add additional tracking details
+            let additionalInfo = document.getElementById('additionalTrackingInfo');
+            if (!additionalInfo) {
+                additionalInfo = document.createElement('div');
+                additionalInfo.id = 'additionalTrackingInfo';
+                additionalInfo.style.cssText = `
+                    margin-top: 1.5rem;
+                    padding-top: 1.5rem;
+                    border-top: 1px solid #e0e0e0;
+                `;
+                document.getElementById('trackingResult').appendChild(additionalInfo);
+            }
+            
+            additionalInfo.innerHTML = `
+                <p><strong>📦 Package Type:</strong> ${data.packageType || 'Standard Package'}</p>
+                <p><strong>👤 Sender:</strong> ${data.senderName || 'Not Available'}</p>
+                <p><strong>👥 Receiver:</strong> ${data.receiverName || 'Not Available'}</p>
+                <p><strong>📅 Booking Date:</strong> ${new Date(data.bookingDate).toLocaleDateString('en-IN')}</p>
+            `;
+            
+            // Show status-specific styling
+            const statusElement = document.getElementById('packageStatus');
+            const trackingResult = document.getElementById('trackingResult');
+            
+            // Reset classes
+            trackingResult.className = 'tracking-result show';
+            
+            switch(data.status.toLowerCase()) {
+                case 'delivered':
+                    trackingResult.style.background = 'linear-gradient(135deg, #e8f5e8, #f0fff0)';
+                    trackingResult.style.borderColor = '#4caf50';
+                    statusElement.style.color = '#4caf50';
+                    break;
+                case 'in transit':
+                case 'picked up':
+                case 'out for delivery':
+                    trackingResult.style.background = 'linear-gradient(135deg, #e3f2fd, #f0f8ff)';
+                    trackingResult.style.borderColor = '#2196f3';
+                    statusElement.style.color = '#2196f3';
+                    break;
+                case 'pending pickup':
+                    trackingResult.style.background = 'linear-gradient(135deg, #fff3e0, #fefefe)';
+                    trackingResult.style.borderColor = '#ff9800';
+                    statusElement.style.color = '#ff9800';
+                    break;
+                default:
+                    trackingResult.style.background = 'linear-gradient(135deg, #f5f5f5, #fafafa)';
+                    trackingResult.style.borderColor = '#9e9e9e';
+                    statusElement.style.color = '#666';
+            }
+        }
+
+        // Allow Enter key to trigger tracking
+        document.getElementById('trackingId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                trackPackage();
+            }
+        });
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+
+            if (!name || !email || !subject || !message) {
+                showAlert('contactAlert', 'Please fill in all required fields.', 'error');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('contactAlert', 'Please enter a valid email address.', 'error');
+                return;
+            }
+
+            // Simulate form submission
+            showAlert('contactAlert', 
+                `Thank you ${name}! Your message has been sent successfully. Our team will get back to you within 24 hours.`, 
+                'success');
+            
+            this.reset();
+        });
+
+        // Initialize the application
+        function initializeApp() {
+            // Initialize dummy tracking data first
+            initializeDummyData();
+            
+            // Set minimum date for pickup to today
+            setMinPickupDate();
+            
+            // Show home section by default
+            showSection('home');
+            
+            console.log('Available Demo Tracking IDs:');
+            console.log('RJC001 - In Transit (Electronics)');
+            console.log('RJC002 - Delivered (Documents)');
+            console.log('RJC003 - Pending Pickup (Fragile Items)');
+            console.log('RJC004 - Out for Delivery (Documents)');
+            console.log('RJC005 - Picked Up (Clothing)');
+        }
+
+        function setMinPickupDate() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const pickupDateInput = document.getElementById('pickupDate');
+            if (pickupDateInput) {
+                pickupDateInput.min = tomorrow.toISOString().split('T')[0];
+            }
+        }
+
+        // Enhanced tracking simulation with realistic updates
+        function simulateTrackingUpdates() {
+            const statusOptions = [
+                { status: 'Pickup Scheduled', location: 'Origin - Awaiting Collection' },
+                { status: 'Picked Up', location: 'Collection Complete - In Transit' },
+                { status: 'In Transit', location: 'Mumbai Distribution Center' },
+                { status: 'Out for Delivery', location: 'Local Delivery Hub' },
+                { status: 'Delivered', location: 'Destination - Package Delivered' }
+            ];
+
+            // Update existing bookings periodically
+            Object.keys(bookings).forEach(trackingId => {
+                const booking = bookings[trackingId];
+                const hoursSinceBooking = (new Date() - booking.bookingDate) / (1000 * 60 * 60);
+                
+                if (hoursSinceBooking > 1 && booking.status === 'Pickup Scheduled') {
+                    booking.status = 'Picked Up';
+                    booking.currentLocation = 'Collection Complete - In Transit';
+                    booking.lastUpdated = new Date();
+                } else if (hoursSinceBooking > 6 && booking.status === 'Picked Up') {
+                    booking.status = 'In Transit';
+                    booking.currentLocation = 'Mumbai Distribution Center';
+                    booking.lastUpdated = new Date();
+                }
+            });
+        }
+
+        // Run simulation updates every 30 seconds
+        setInterval(simulateTrackingUpdates, 30000);
+
+        // Initialize app when page loads
+        window.addEventListener('load', initializeApp);
+
+        // Handle form input animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                    this.style.borderColor = '#667eea';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                    if (!this.value) {
+                        this.style.borderColor = '#e0e0e0';
+                    }
+                });
+            });
+        });
+
+        // Enhanced mobile menu functionality
+        document.addEventListener('click', function(e) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for better UX
+        function smoothScrollTo(element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Add loading animation for form submissions
+        function showLoading(buttonElement) {
+            const originalText = buttonElement.textContent;
+            buttonElement.textContent = 'Processing...';
+            buttonElement.disabled = true;
+            
+            setTimeout(() => {
+                buttonElement.textContent = originalText;
+                buttonElement.disabled = false;
+            }, 2000);
+        }
+
+        // Enhanced form submission with loading states
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            showLoading(submitButton);
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            showLoading(submitButton);
+        });
+
+        // Add real-time form validation
+        function addRealTimeValidation() {
+            const requiredInputs = document.querySelectorAll('input[required], textarea[required], select[required]');
+            
+            requiredInputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (!this.value.trim()) {
+                        this.style.borderColor = '#ff6b6b';
+                    } else {
+                        this.style.borderColor = '#4caf50';
+                    }
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        this.style.borderColor = '#4caf50';
+                    }
+                });
+            });
+        }
+
+        // Initialize real-time validation
+        document.addEventListener('DOMContentLoaded', addRealTimeValidation);
+
+        // Keyboard shortcuts for better accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.altKey) {
+                switch(e.key) {
+                    case 'h':
+                        showSection('home');
+                        break;
+                    case 'b':
+                        showSection('book');
+                        break;
+                    case 't':
+                        showSection('track');
+                        break;
+                    case 's':
+                        showSection('services');
+                        break;
+                    case 'c':
+                        showSection('contact');
+                        break;
+                }
+            }
+        });
+
+        // Auto-complete and suggestions for common addresses (demo feature)
+        const commonAddresses = [
+            'Andheri East, Mumbai, Maharashtra',
+            'Bandra West, Mumbai, Maharashtra',
+            'Powai, Mumbai, Maharashtra',
+            'Thane West, Maharashtra',
+            'Pune, Maharashtra',
+            'Delhi, Delhi',
+            'Bangalore, Karnataka',
+            'Chennai, Tamil Nadu'
+        ];
+
+        function addAddressAutocomplete() {
+            const addressInputs = document.querySelectorAll('#senderAddress, #receiverAddress');
+            
+            addressInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const value = this.value.toLowerCase();
+                    if (value.length > 2) {
+                        const suggestions = commonAddresses.filter(addr => 
+                            addr.toLowerCase().includes(value)
+                        );
+                        
+                        // Simple autocomplete simulation
+                        if (suggestions.length > 0 && !this.getAttribute('data-autocomplete-shown')) {
+                            this.setAttribute('data-autocomplete-shown', 'true');
+                            this.style.background = '#f0f8ff';
+                        }
+                    }
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', addAddressAutocomplete);
+
+        // Price calculator (bonus feature)
+        function calculateEstimatedPrice(packageType, weight, pickupDate) {
+            const baseRates = {
+                'documents': 99,
+                'electronics': 199,
+                'clothing': 149,
+                'books': 129,
+                'fragile': 299,
+                'other': 179
+            };
+            
+            let price = baseRates[packageType] || 179;
+            
+            // Add weight surcharge
+            if (weight > 5) {
+                price += (weight - 5) * 20;
+            }
+            
+            // Express charge for same-day pickup
+            const pickup = new Date(pickupDate);
+            const today = new Date();
+            if (pickup.toDateString() === today.toDateString()) {
+                price += 100;
+            }
+            
+            return Math.round(price);
+        }
+
+        // Add price estimation to booking form
+        document.addEventListener('DOMContentLoaded', function() {
+            const packageType = document.getElementById('packageType');
+            const packageWeight = document.getElementById('packageWeight');
+            const pickupDate = document.getElementById('pickupDate');
+            
+            function updatePriceEstimate() {
+                if (packageType.value && pickupDate.value) {
+                    const weight = parseFloat(packageWeight.value) || 0;
+                    const estimatedPrice = calculateEstimatedPrice(packageType.value, weight, pickupDate.value);
+                    
+                    let priceElement = document.getElementById('priceEstimate');
+                    if (!priceElement) {
+                        priceElement = document.createElement('div');
+                        priceElement.id = 'priceEstimate';
+                        priceElement.style.cssText = `
+                            background: linear-gradient(135deg, #e8f5e8, #f0fff0);
+                            border: 2px solid #4caf50;
+                            padding: 1rem;
+                            border-radius: 10px;
+                            margin: 1rem 0;
+                            text-align: center;
+                            font-weight: bold;
+                            color: #2e7d32;
+                        `;
+                        document.getElementById('bookingForm').appendChild(priceElement);
+                    }
+                    
+                    priceElement.innerHTML = `📋 Estimated Price: ₹${estimatedPrice}`;
+                }
+            }
+            
+            [packageType, packageWeight, pickupDate].forEach(element => {
+                element.addEventListener('change', updatePriceEstimate);
+                element.addEventListener('input', updatePriceEstimate);
+            });
+        });
+
+        console.log('RJCouriers System Initialized Successfully!');
+        console.log('Available Demo Tracking IDs:');
+        console.log('• RJC001 - In Transit (Electronics from Rajesh to Priya)');
+        console.log('• RJC002 - Delivered (Documents from Anita to Vikram)');
+        console.log('• RJC003 - Pending Pickup (Fragile Items from Mohammad to Sunita)');
+        console.log('• RJC004 - Out for Delivery (Documents - Corporate)');
+        console.log('• RJC005 - Picked Up (Clothing from Kavya to Arjun)');
+        console.log('Try entering any of these tracking IDs to see detailed tracking information!');
+    </script>
+</body>
+</html>
